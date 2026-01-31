@@ -69,5 +69,78 @@ Transfer learning is used to reduce data requirements by fine-tuning pre-trained
 | Phase-to-phase | 100% | **100%** | 100% |
 
 ---
+## How to Run
+
+This project can be run in two stages: **(A) simulation/data generation** and **(B) model training + evaluation**.
+
+### A) Generate stator current data (MATLAB/Simulink)
+1. Open the Simulink induction motor model in `sim/`.
+2. Configure the simulation cases:
+   - **Health states:** Healthy, Single-phasing, Phase-to-phase
+   - **Load levels:** e.g., 0%, 25%, 50%, 75%, 100%
+3. Run simulations and log stator current signals (per phase or a selected phase current).
+4. Export each run to CSV and store in:
+   - `data/raw/`
+
+**Recommended CSV fields (minimum):**
+- `time`
+- `current_a` (or `current_b`, `current_c`)
+- `label` (0=Healthy, 1=Single-phasing, 2=Phase-to-phase)
+- `load_pct`
+
+> Tip: Keep naming consistent so your notebook preprocessing can batch-load runs easily.
+
+---
+
+### B) Train and evaluate the deep learning models (Google Colab / Local Python)
+1. Open one of the notebooks in `notebooks/`:
+   - `ResNet152.ipynb` (recommended starting point)
+   - `InceptionV3.ipynb`
+   - `VGG19.ipynb`
+2. Run preprocessing cells:
+   - Load dataset from `data/raw/` (or the provided Drive link)
+   - Apply any reshaping/segmentation steps used in the notebook
+   - Confirm label mapping and class balance
+3. Train the model and evaluate:
+   - Confusion matrix
+   - Accuracy/loss curves
+   - Precision, Recall, F1-score
+
+---
+
+### C) Reproduce reported results
+To reproduce the headline results, run:
+- `notebooks/ResNet152.ipynb` start-to-finish  
+using the same dataset split strategy and hyperparameters documented below.
+
+---
+
+## Hyperparameters (Reported)
+
+| Parameter | InceptionV3 | ResNet152 | VGG19 |
+|---|---:|---:|---:|
+| Learning rate | 0.0001 | 0.001 | 0.0001 |
+| Batch size | 16 | 28 | 32 |
+| Loss function | Categorical cross-entropy | Categorical cross-entropy | Categorical cross-entropy |
+| Epochs | 20 | 15 | 20 |
+
+> Note: If you change the dataset split, preprocessing, or augmentation, your metrics may shift. Keep a fixed random seed for reproducibility when possible.
+
+---
+
+## Limitations
+
+- **Simulation-only data:** Results are obtained from simulated stator current signatures; real-world measurements may include additional noise sources, sensor drift, and non-idealities.
+- **Dataset size:** The dataset is relatively small for deep CNN fine-tuning; larger datasets typically improve generalization and robustness.
+- **Fault coverage:** The current study focuses on stator-related faults (healthy, single-phasing, phase-to-phase). It does not yet include common industrial fault modes such as bearing faults, rotor bar faults, or eccentricity.
+- **Domain shift risk:** Models trained on simulated signatures may not transfer directly to field data without domain adaptation or re-training with real measurements.
+
+---
+
+## Acknowledgements
+
+- Project supervisor(s) and department support (as listed in the project report).
+- Contributors and collaborators involved in simulation setup, dataset preparation, and evaluation.
+- Open-source libraries and research community enabling transfer learning workflows.
 
 
