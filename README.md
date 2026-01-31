@@ -74,7 +74,7 @@ Transfer learning is used to reduce data requirements by fine-tuning pre-trained
 This project can be run in two stages: **(A) simulation/data generation** and **(B) model training + evaluation**.
 
 ### A) Generate stator current data (MATLAB/Simulink)
-1. Open the Simulink induction motor model in `sim/`.
+1. Open the Simulink induction motor model
 2. Configure the simulation cases:
    - **Health states:** Healthy, Single-phasing, Phase-to-phase
    - **Load levels:** e.g., 0%, 25%, 50%, 75%, 100%
@@ -93,7 +93,7 @@ This project can be run in two stages: **(A) simulation/data generation** and **
 ---
 
 ### B) Train and evaluate the deep learning models (Google Colab / Local Python)
-1. Open one of the notebooks in `notebooks/`:
+1. Open one of the notebooks:
    - `ResNet152.ipynb` (recommended starting point)
    - `InceptionV3.ipynb`
    - `VGG19.ipynb`
@@ -110,7 +110,7 @@ This project can be run in two stages: **(A) simulation/data generation** and **
 
 ### C) Reproduce reported results
 To reproduce the headline results, run:
-- `notebooks/ResNet152.ipynb` start-to-finish  
+- `ResNet152.ipynb` start-to-finish  
 using the same dataset split strategy and hyperparameters documented below.
 
 ---
