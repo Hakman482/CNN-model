@@ -80,7 +80,7 @@ This project can be run in two stages: **(A) simulation/data generation** and **
    - **Load levels:** e.g., 0%, 25%, 50%, 75%, 100%
 3. Run simulations and log stator current signals (per phase or a selected phase current).
 4. Export each run to CSV and store in:
-   - `data/raw/`
+   - `data/`
 
 **Recommended CSV fields (minimum):**
 - `time`
@@ -98,7 +98,7 @@ This project can be run in two stages: **(A) simulation/data generation** and **
    - `InceptionV3.ipynb`
    - `VGG19.ipynb`
 2. Run preprocessing cells:
-   - Load dataset from `data/raw/` (or the provided Drive link)
+   - Load dataset from `data/`
    - Apply any reshaping/segmentation steps used in the notebook
    - Confirm label mapping and class balance
 3. Train the model and evaluate:
